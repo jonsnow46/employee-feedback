@@ -20,8 +20,11 @@ export class AdminDataService {
   }
 
   updateEmployee(employee: Employee): Observable<Employee> {
-    console.log(employee._id);
     return this.http.put<Employee>(this.dataUrl+'/'+employee._id, employee);
+  }
+
+  deleteEmployee(id: String): Observable<Employee> {
+    return this.http.delete<Employee>(this.dataUrl+'/'+id);
   }
 
 }

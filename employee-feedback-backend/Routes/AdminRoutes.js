@@ -36,6 +36,7 @@ router.get('/employee', async (req, res) => {
     }
 })
 
+//update employee
 router.put('/employee/:id',async (req,res) =>{
     let employeeObj = {
         employee_number: req.body.employee_number,
@@ -45,12 +46,27 @@ router.put('/employee/:id',async (req,res) =>{
         feedback: req.body.feedback,
     };
     
-    console.log(req.params);
         if(mongoType.ObjectId.isValid(req.params.id)){
-            console.log(req.params); 
             
             try {
                 const employee = await Employee.findByIdAndUpdate(req.params.id, {$set : employeeObj},{new : this.true},({}));
+                res.status(200).send(employee);
+            } catch (err) {
+                console.log("Error occured while fetching");
+                res.status(400).send("Internal error " + err)
+            }
+        }
+        else{
+            res.status(400).send('Unable to find employee');
+        }
+    
+})
+
+//delete employee
+router.delete('/employee/:id',async (req,res) =>{
+        if(mongoType.ObjectId.isValid(req.params.id)){
+            try {
+                const employee = await Employee.findByIdAndRemove(req.params.id,({}));
                 res.status(200).send(employee);
             } catch (err) {
                 console.log("Error occured while fetching");

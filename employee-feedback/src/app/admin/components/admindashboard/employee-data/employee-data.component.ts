@@ -102,4 +102,15 @@ export class EmployeeDataComponent implements OnInit {
       console.log('Error while updating employee. '+err);
     })
   }
+
+  deleteEmployee(employee : Employee){
+    if(window.confirm('Are you sure you want to delete '+employee.employee_name)){
+      this.dataService.deleteEmployee(employee._id).subscribe(res => {
+        console.log("Employee Deleted");
+        this.ngOnInit();
+      },err =>{
+        console.log("Error while deleting"+err);
+      });
+    }
+  }
 }
