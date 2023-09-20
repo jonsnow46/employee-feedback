@@ -9,7 +9,7 @@
                         <label for="exampleInputEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName ="username">
                         <div *ngIf="adminLoginData.get('username')?.invalid && (adminLoginData.get('username')?.dirty || adminLoginData.get('username')?.touched )" class ="text-danger">
-                            This is required field
+                            Enter valid email address
                         </div>
                     </div>
                     <div class="mb-3">

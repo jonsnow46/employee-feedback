@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AdminAuthService } from '../../service/admin-auth.service';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,7 @@ export class LoginComponent implements OnInit {
     username: new FormControl,
     password: new FormControl
   })
-  constructor(private fb: FormBuilder) { }
+  constructor(private fb: FormBuilder, private adminAuth : AdminAuthService) { }
   
   ngOnInit(): void {
     this.adminLoginData = this.fb.group({
@@ -22,7 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   adminLogin(){
-    console.log(this.adminLoginData.value.username + " "+ this.adminLoginData.value.password);
+    this.adminAuth.adminLogin(this.adminLoginData.value.username,this.adminLoginData.value.password)
   }
 
 }
