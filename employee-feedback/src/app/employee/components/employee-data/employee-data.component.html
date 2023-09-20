@@ -1,0 +1,95 @@
+<div class="container-fluid">
+    <!--First Row-->
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <a style="text-decoration: none;">
+                <div class="card shadow ">
+                    <div class="card-body text-success">
+                        <h6>Employee Reviews</h6>
+                        <p>---</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow ">
+                <div class="card-body text-success">
+                    <h6>Total Employee Reviews</h6>
+                    <p class="text-success">{{allPerformance.length}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Second Row-->
+    <div class="col-pe2 mt-3">
+        <div class="col-sm-12">
+            <div>
+                <div class="card-shadow">
+                    <div class="card-body">
+                        <h6 class="text-success">
+                            Reviews
+                        </h6>
+                        <div class="table table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Reviewer Name</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Performance Review</th>
+                                    <th scope="col">Feedback</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let performance of allPerformance">
+                                    <td>{{performance.reviewer_name}}</td>
+                                    <td>{{performance.employee_name}}</td>
+                                    <td>{{performance.performance_review}}</td>
+                                    <td>{{performance.feedback}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary me-2"
+                                            (click)="getEmployee(performance)" data-bs-toggle="modal"
+                                            data-bs-target="#viewModal">View</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Employee-->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-center text-success" id="exampleModalLabel">Employee Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td scope="row"><b>Reviewer Name</b></td>
+                                <td> {{ performanceReviewForm.get('reviewer_name')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Employee Name</b></td>
+                                <td> {{ performanceReviewForm.get('employee_name')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Performance Review</b></td>
+                                <td> {{ performanceReviewForm.get('performance_review')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Feedback</b></td>
+                                <td> {{ performanceReviewForm.get('feedback')?.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table><button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

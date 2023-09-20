@@ -3,6 +3,6 @@ export interface Employee {
     employee_number: number,
     employee_name: string,
     joining_year: number,
-    performance_review: string,
-    feedback: string
+    email: string,
+    password: string
 }

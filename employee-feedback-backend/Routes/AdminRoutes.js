@@ -11,11 +11,9 @@ router.post('/employee', async (req, res) => {
         employee_number: req.body.employee_number,
         employee_name: req.body.employee_name,
         joining_year: req.body.joining_year,
-        performance_review: req.body.performance_review,
-        feedback: req.body.feedback,
+        email: req.body.email,
+        password: req.body.password,
     });
-
-    console.log('request ' + req);
     try {
         const employee = await employeeObj.save({});
         res.send(employee);
@@ -42,8 +40,8 @@ router.put('/employee/:id', async (req, res) => {
         employee_number: req.body.employee_number,
         employee_name: req.body.employee_name,
         joining_year: req.body.joining_year,
-        performance_review: req.body.performance_review,
-        feedback: req.body.feedback,
+        email: req.body.email,
+        password: req.body.password,
     };
 
     if (mongoType.ObjectId.isValid(req.params.id)) {
@@ -79,6 +77,19 @@ router.delete('/employee/:id', async (req, res) => {
 
 })
 
+//get credentials
+router.get('/employee/:email', async (req, res) => {
+    try {
+        const employee = await Employee.find({ email: req.params.email });
+        console.log(employee, req.params.email)
+        res.status(200).send(employee);
+    } catch (err) {
+        console.log("Error occured while fetching");
+        res.status(400).send("Internal error " + err)
+    }
+})
+
+
 //post performance api
 router.post('/performance', async (req, res) => {
     let performanceObj = new PerformanceReview({
@@ -87,7 +98,6 @@ router.post('/performance', async (req, res) => {
         performance_review: req.body.performance_review,
         feedback: req.body.feedback,
     });
-    console.log('request ' + req);
     try {
         const performance = await performanceObj.save({});
         res.send(performance);

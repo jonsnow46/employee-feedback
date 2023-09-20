@@ -1,0 +1,48 @@
+<div class="container-fluid">
+    <!--First Row-->
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <a style="text-decoration: none;">
+                <div class="card shadow ">
+                    <div class="card-body text-success">
+                        <h6>Employee Details</h6>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Second Row-->
+    <div class="col-pe2 mt-3">
+        <div class="col-sm-12">
+            <div>
+                <div class="card-shadow">
+                    <div class="card-body">
+                        <div class="table table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Joining Year</th>
+                                    <th scope="col">Email</th>
+                                    <!-- <th scope="col">Feedback</th> -->
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let employee of allEmployees">
+                                    <td>{{employee.employee_number}}</td>
+                                    <td>{{employee.employee_name}}</td>
+                                    <td>{{employee.joining_year}}</td>
+                                    <td>{{employee.email}}</td>
+                                    <td>***</td>
+                                    <td>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

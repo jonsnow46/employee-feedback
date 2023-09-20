@@ -35,8 +35,8 @@
                                     <th scope="col">ID</th>
                                     <th scope="col">Name</th>
                                     <th scope="col">Joining Year</th>
-                                    <!-- <th scope="col">Performance Review</th>
-                                    <th scope="col">Feedback</th> -->
+                                    <th scope="col">Email</th>
+                                    <!-- <th scope="col">Feedback</th> -->
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -45,8 +45,8 @@
                                     <td>{{employee.employee_number}}</td>
                                     <td>{{employee.employee_name}}</td>
                                     <td>{{employee.joining_year}}</td>
-                                    <!-- <td>{{employee.performance_review}}</td>
-                                    <td>{{employee.feedback}}</td> -->
+                                    <td>{{employee.email}}</td>
+                                    <td >***</td>
                                     <td>
                                         <button type="button" class="btn btn-outline-secondary me-2"
                                             (click)="getEmployee(employee)" data-bs-toggle="modal"
@@ -94,19 +94,19 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
-                                formControlName="performance_review">
-                            <label for="floatingInput">Performance Review</label>
-                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email Address"
+                                formControlName="email">
+                            <label for="floatingInput">Email Address</label>
+                            <div *ngIf="employeeDetailsForm.get('email')?.invalid && (employeeDetailsForm.get('email')?.dirty || employeeDetailsForm.get('email')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
-                                formControlName="feedback">
-                            <label for="floatingPassword">Feedback</label>
-                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password"
+                                formControlName="password">
+                            <label for="floatingPassword">Password</label>
+                            <div *ngIf="employeeDetailsForm.get('password')?.invalid && (employeeDetailsForm.get('password')?.dirty || employeeDetailsForm.get('password')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
@@ -144,12 +144,12 @@
                                 <td> {{employeeDetailsForm.get('joining_year')?.value}}</td>
                             </tr>
                             <tr>
-                                <td scope="row"><b>Performance Review</b></td>
-                                <td> {{employeeDetailsForm.get('performance_review')?.value}}</td>
+                                <td scope="row"><b>Email Address</b></td>
+                                <td> {{employeeDetailsForm.get('email')?.value}}</td>
                             </tr>
                             <tr>
-                                <td scope="row"><b>Feedback</b></td>
-                                <td> {{employeeDetailsForm.get('feedback')?.value}}</td>
+                                <td scope="row"><b>Password</b></td>
+                                <td type="password"> {{employeeDetailsForm.get('password')?.value}}</td>
                             </tr>
                         </tbody>
                     </table><button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
@@ -189,20 +189,20 @@
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
-                                formControlName="performance_review"
-                                value="employeeDetailsForm.get('performance_review').value">
-                            <label for="floatingInput">Performance Review</label>
-                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                            <input type="email" class="form-control" id="floatingInput" placeholder="Email"
+                                formControlName="email"
+                                value="employeeDetailsForm.get('email').value">
+                            <label for="floatingInput">Email Address</label>
+                            <div *ngIf="employeeDetailsForm.get('email')?.invalid && (employeeDetailsForm.get('email')?.dirty || employeeDetailsForm.get('email')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
-                                formControlName="feedback" value="employeeDetailsForm.get('feedback').value">
-                            <label for="floatingPassword">Feedback</label>
-                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                            <input type="password" class="form-control" id="floatingPassword" placeholder="password"
+                                formControlName="password" value="employeeDetailsForm.get('password').value">
+                            <label for="floatingPassword">Password</label>
+                            <div *ngIf="employeeDetailsForm.get('password')?.invalid && (employeeDetailsForm.get('password')?.dirty || employeeDetailsForm.get('password')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>

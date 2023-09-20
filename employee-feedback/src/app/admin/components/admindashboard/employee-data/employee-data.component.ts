@@ -15,8 +15,8 @@ export class EmployeeDataComponent implements OnInit {
     employee_number: new FormControl(),
     employee_name: new FormControl(),
     joining_year: new FormControl(),
-    performance_review: new FormControl(),
-    feedback: new FormControl(),
+    email: new FormControl(),
+    password: new FormControl(),
   })
 
   employeeObj: Employee = {
@@ -24,8 +24,8 @@ export class EmployeeDataComponent implements OnInit {
     employee_number: 0,
     employee_name: '',
     joining_year: 0,
-    performance_review: '',
-    feedback: ''
+    email: '',
+    password: ''
   }
   allEmployees: Employee[] = [];
 
@@ -39,8 +39,8 @@ export class EmployeeDataComponent implements OnInit {
       employee_number: [''],
       employee_name: ['', [Validators.required]],
       joining_year: ['', [Validators.required]],
-      performance_review: ['', [Validators.required]],
-      feedback: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required, Validators.minLength(6)]],
     })
     this.getAllEmployees();
   }
@@ -48,8 +48,8 @@ export class EmployeeDataComponent implements OnInit {
   addNewEmployee() {
     this.employeeObj.employee_name = this.employeeDetailsForm.value.employee_name;
     this.employeeObj.joining_year = this.employeeDetailsForm.value.joining_year;
-    this.employeeObj.performance_review = this.employeeDetailsForm.value.performance_review;
-    this.employeeObj.feedback = this.employeeDetailsForm.value.feedback;
+    this.employeeObj.email = this.employeeDetailsForm.value.email;
+    this.employeeObj.password = this.employeeDetailsForm.value.password;
     this.employeeObj.employee_number = this.getEmployeeId();
 
     this.dataService.addEmployee(this.employeeObj).subscribe(res => {
@@ -69,47 +69,46 @@ export class EmployeeDataComponent implements OnInit {
 
   getAllEmployees() {
     this.dataService.getAllEmployees().subscribe(res => {
-      console.log(res);
       this.allEmployees = res;
     }, err => {
       console.log(err);
     })
   }
 
-  getEmployee(employee : Employee){
+  getEmployee(employee: Employee) {
     this.employeeDetailsForm = this.fb.group({
       _id: employee._id,
-      employee_number:employee.employee_number,
-      employee_name:employee.employee_name,
+      employee_number: employee.employee_number,
+      employee_name: employee.employee_name,
       joining_year: employee.joining_year,
-      performance_review: employee.performance_review,
-      feedback: employee.feedback,
-    
+      email: employee.email,
+      password: employee.password,
+
     })
   }
 
-  updateEmployee(){
+  updateEmployee() {
     this.employeeObj.employee_name = this.employeeDetailsForm.value.employee_name;
     this.employeeObj.joining_year = this.employeeDetailsForm.value.joining_year;
-    this.employeeObj.performance_review = this.employeeDetailsForm.value.performance_review;
-    this.employeeObj.feedback = this.employeeDetailsForm.value.feedback;
+    this.employeeObj.email = this.employeeDetailsForm.value.email;
+    this.employeeObj.password = this.employeeDetailsForm.value.password;
     this.employeeObj.employee_number = this.employeeDetailsForm.value.employee_number
-    this.employeeObj._id=this.employeeDetailsForm.value._id;
-    this.dataService.updateEmployee(this.employeeObj).subscribe(res =>{
+    this.employeeObj._id = this.employeeDetailsForm.value._id;
+    this.dataService.updateEmployee(this.employeeObj).subscribe(res => {
       console.log('Updated Successfully');
       this.ngOnInit();
-    },err =>{
-      console.log('Error while updating employee. '+err);
+    }, err => {
+      console.log('Error while updating employee. ' + err);
     })
   }
 
-  deleteEmployee(employee : Employee){
-    if(window.confirm('Are you sure you want to delete '+employee.employee_name)){
+  deleteEmployee(employee: Employee) {
+    if (window.confirm('Are you sure you want to delete ' + employee.employee_name)) {
       this.dataService.deleteEmployee(employee._id).subscribe(res => {
         console.log("Employee Deleted");
         this.ngOnInit();
-      },err =>{
-        console.log("Error while deleting"+err);
+      }, err => {
+        console.log("Error while deleting" + err);
       });
     }
   }

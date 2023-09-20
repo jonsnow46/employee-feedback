@@ -66,7 +66,6 @@ export class PerformanceReviewComponent implements OnInit {
 
   getEmployeePerformances(employee : Employee) {
     this.dataService.getEmployeePerformances(employee).subscribe(res => {
-      console.log(res);
       this.allPerformance = res;
     }, err => {
       console.log(err);
@@ -75,7 +74,6 @@ export class PerformanceReviewComponent implements OnInit {
 
   getAllPerformances() {
     this.dataService.getAllPerformances().subscribe(res => {
-      console.log(res);
       this.allPerformance = res;
     }, err => {
       console.log(err);
@@ -85,7 +83,6 @@ export class PerformanceReviewComponent implements OnInit {
   
   getAllEmployees() {
     this.dataService.getAllEmployees().subscribe(res => {
-      console.log(res);
       this.allEmployees = res;
     }, err => {
       console.log(err);
@@ -119,7 +116,6 @@ export class PerformanceReviewComponent implements OnInit {
   }
   
   deletePerformance(performance : PerformanceReview){
-    console.log(performance)
     if(window.confirm('Are you sure you want to delete '+performance.employee_name)){
       this.dataService.deletePerformance(performance._id).subscribe(res => {
         console.log("Employee Deleted");

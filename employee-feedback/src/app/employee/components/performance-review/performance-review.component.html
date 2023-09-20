@@ -1,0 +1,150 @@
+<div class="container-fluid">
+    <!--First Row-->
+    <div class="row text-center mt-4">
+        <div class="col-md-4">
+            <a style="text-decoration: none;">
+                <div class="card shadow ">
+                    <div class="card-body text-success">
+                        <h6>Pending Performance Reviews</h6>
+                        <p>---</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow ">
+                <div class="card-body text-success">
+                    <h6>Total Pending Reviews</h6>
+                    <p class="text-success">{{allPerformance.length}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Second Row-->
+    <div class="col-pe2 mt-3">
+        <div class="col-sm-12">
+            <div>
+                <div class="card-shadow">
+                    <div class="card-body">
+                        <h6 class="text-success">
+                            Reviews
+                        </h6>
+                        <div class="table table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Reviewer Name</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Performance Review</th>
+                                    <th scope="col">Feedback</th>
+                                    <th scope="col" class="text-centre">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let performance of allPerformance">
+                                    <td>{{performance.reviewer_name}}</td>
+                                    <td>{{performance.employee_name}}</td>
+                                    <td>{{performance.performance_review}}</td>
+                                    <td>{{performance.feedback}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary me-1"
+                                            (click)="getEmployee(performance)" data-bs-toggle="modal"
+                                            data-bs-target="#viewModal">View</button>
+                                        <button type="button" class="btn btn-outline-primary me-2"
+                                            (click)="getEmployee(performance)" data-bs-toggle="modal"
+                                            data-bs-target="#editModal">Edit</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--View Performance-->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-center text-success" id="exampleModalLabel">Employee Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td scope="row"><b>Reviewer Name</b></td>
+                                <td> {{ performanceReviewForm.get('reviewer_name')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Employee Name</b></td>
+                                <td> {{ performanceReviewForm.get('employee_name')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Performance Review</b></td>
+                                <td> {{ performanceReviewForm.get('performance_review')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Feedback</b></td>
+                                <td> {{ performanceReviewForm.get('feedback')?.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table><button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Edit Performance-->
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Edit Performance Review</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="performanceReviewForm" (ngSubmit)="updateEmployee()">
+                        <div class="form-floating mb-3">
+                            <input  type="text" class="form-control" id="floatingInput" placeholder="Reviewer Name"
+                                formControlName="reviewer_name" >
+                            <label for="floatingInput">Reviewer Name</label>
+                            
+                        </div>
+                        <div class="form-floating mb-3">
+                            <select  class="form-select"  id="employee_name" formControlName="employee_name" >
+                                <option *ngFor="let employee of allEmployees" [value]="employee.employee_name">{{
+                                    employee.employee_name }}</option>
+                            </select>
+                            
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
+                                formControlName="performance_review"
+                                value="performanceReviewForm.get('performance_review').value">
+                            <label for="floatingInput">Performance Review</label>
+                            <div *ngIf="performanceReviewForm.get('performance_review')?.invalid && (performanceReviewForm.get('performance_review')?.dirty || performanceReviewForm.get('performance_review')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
+                                formControlName="feedback" value="performanceReviewForm.get('feedback').value">
+                            <label for="floatingPassword">Feedback</label>
+                            <div *ngIf="performanceReviewForm.get('feedback')?.invalid && (performanceReviewForm.get('feedback')?.dirty || performanceReviewForm.get('feedback')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal"
+                            [disabled]="performanceReviewForm.invalid">Update
+                            Employee</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

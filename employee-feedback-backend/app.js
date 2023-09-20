@@ -5,11 +5,13 @@ const express = require("express");
 const cors = require("cors");
 const bodyParser = require("body-parser");
 const adminRoutes = require('./Routes/AdminRoutes');
+const employeeRoutes = require('./Routes/EmployeeRoutes');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors({ origin: 'http://localhost:4200' }));
 app.use('/admin', adminRoutes);
+app.use('/employee', employeeRoutes);
 
 //get method
 app.get("/", (req, res) => {

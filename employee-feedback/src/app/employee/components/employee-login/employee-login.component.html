@@ -3,23 +3,23 @@
         <div class="col"></div>
         <div class="col-md-3 my5 me-5" style="height: 400px;">
             <div class="card shadow p-4" style="height: 400px !important;">
-                <form [formGroup]="adminLoginData" (ngSubmit)="adminLogin()">
+                <form [formGroup]="loginData" (ngSubmit)="employeeLogin()">
                     <h4 class="text-success">Login</h4>
                     <div class="mb-3">
                         <label for="exampleInputEmail" class="form-label">Email address</label>
                         <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" formControlName ="username">
-                        <div *ngIf="adminLoginData.get('username')?.invalid && (adminLoginData.get('username')?.dirty || adminLoginData.get('username')?.touched )" class ="text-danger">
+                        <div *ngIf="loginData.get('username')?.invalid && (loginData.get('username')?.dirty || loginData.get('username')?.touched )" class ="text-danger">
                             Enter valid email address
                         </div>
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword" class="form-label">Password</label>
                         <input type="password" class="form-control" id="exampleInpuPassword1" formControlName ="password">                        
-                        <div *ngIf="adminLoginData.get('password')?.invalid && (adminLoginData.get('password')?.dirty || adminLoginData.get('password')?.touched)" class ="text-danger">
+                        <div *ngIf="loginData.get('password')?.invalid && (loginData.get('password')?.dirty || loginData.get('password')?.touched)" class ="text-danger">
                             This is required field
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-outline-success me-2 ms-auto" [disabled]="adminLoginData.invalid">Submit</button>
+                    <button type="submit" class="btn btn-outline-success me-2 ms-auto" [disabled]="loginData.invalid">Submit</button>
                 </form>
             </div>
         </div>
