@@ -35,7 +35,7 @@ export class EmployeeDataComponent implements OnInit {
 
   ngOnInit(): void {
     this.employeeDetailsForm = this.fb.group({
-      _id: ['', [Validators.required]],
+      _id: [''],
       employee_number: [''],
       employee_name: ['', [Validators.required]],
       joining_year: ['', [Validators.required]],
