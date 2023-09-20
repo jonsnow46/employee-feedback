@@ -1,1 +1,218 @@
-<p>employee-data works!</p>
+<div class="container-fluid">
+    <!--First Row-->
+    <div class="row text-center mt-3">
+        <div class="col-md-4">
+            <a href="" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+                <div class="card shadow ">
+                    <div class="card-body text-success">
+                        <h6>Add Employee</h6>
+                        <p class="text-success">+</p>
+                    </div>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-4">
+            <div class="card shadow ">
+                <div class="card-body text-success">
+                    <h6>Total Employee</h6>
+                    <p class="text-success">10</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Second Row-->
+    <div class="col-pe2 mt-3">
+        <div class="col-sm-12 text-center">
+            <div>
+                <div class="card-shadow">
+                    <div class="card-body">
+                        <h6 class="text-success">
+                            List of Employees
+                        </h6>
+                        <div class="table table-hover mt-3">
+                            <thead>
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Joining Year</th>
+                                    <th scope="col">Performance Review</th>
+                                    <th scope="col">Feedback</th>
+                                    <th scope="col">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr *ngFor="let employee of allEmployees">
+                                    <td>{{employee.employee_number}}</td>
+                                    <td>{{employee.employee_name}}</td>
+                                    <td>{{employee.joining_year}}</td>
+                                    <td>{{employee.performance_review}}</td>
+                                    <td>{{employee.feedback}}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-outline-secondary me-2"
+                                            (click)="getEmployee(employee)" data-bs-toggle="modal"
+                                            data-bs-target="#viewModal">View</button>
+                                        <button type="button" class="btn btn-outline-primary me-2"
+                                            (click)="getEmployee(employee)" data-bs-toggle="modal"
+                                            data-bs-target="#editModal">Edit</button>
+                                        <button type=" button" class="btn btn-outline-danger">Delete</button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Add Employee-->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Add Employee</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="employeeDetailsForm" (ngSubmit)="addNewEmployee()">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Employee Name"
+                                formControlName="employee_name">
+                            <label for="floatingInput">Employee Name</label>
+                            <div *ngIf="employeeDetailsForm.get('employee_name')?.invalid && (employeeDetailsForm.get('employee_name')?.dirty || employeeDetailsForm.get('employee_name')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Joining Year"
+                                formControlName="joining_year">
+                            <label for="floatingInput">Joining Year</label>
+                            <div *ngIf="employeeDetailsForm.get('joining_year')?.invalid && (employeeDetailsForm.get('joining_year')?.dirty || employeeDetailsForm.get('joining_year')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
+                                formControlName="performance_review">
+                            <label for="floatingInput">Performance Review</label>
+                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
+                                formControlName="feedback">
+                            <label for="floatingPassword">Feedback</label>
+                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary"
+                            [disabled]="employeeDetailsForm.invalid">Submit</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--View Employee-->
+    <div class="modal fade" id="viewModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-center text-success" id="exampleModalLabel">Employee Details</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <table class="table table-hover">
+                        <tbody>
+                            <tr>
+                                <td scope="row"><b>Employee Number</b></td>
+                                <td> {{employeeDetailsForm.get('employee_number')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Employee Name</b></td>
+                                <td> {{employeeDetailsForm.get('employee_name')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Joining Year</b></td>
+                                <td> {{employeeDetailsForm.get('joining_year')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Performance Review</b></td>
+                                <td> {{employeeDetailsForm.get('performance_review')?.value}}</td>
+                            </tr>
+                            <tr>
+                                <td scope="row"><b>Feedback</b></td>
+                                <td> {{employeeDetailsForm.get('feedback')?.value}}</td>
+                            </tr>
+                        </tbody>
+                    </table><button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--Edit Employee-->
+    <div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Add Employee</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form [formGroup]="employeeDetailsForm" (ngSubmit)="updateEmployee()">
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Employee Name"
+                                formControlName="employee_name" value="employeeDetailsForm.get('employee_name').value">
+                            <label for="floatingInput">Employee Name</label>
+                            <div *ngIf="employeeDetailsForm.get('employee_name')?.invalid && (employeeDetailsForm.get('employee_name')?.dirty || employeeDetailsForm.get('employee_name')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="floatingInput" placeholder="Joining Year"
+                                formControlName="joining_year" value="employeeDetailsForm.get('joining_year').value">
+                            <label for="floatingInput">Joining Year</label>
+                            <div *ngIf="employeeDetailsForm.get('joining_year')?.invalid && (employeeDetailsForm.get('joining_year')?.dirty || employeeDetailsForm.get('joining_year')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
+                                formControlName="performance_review"
+                                value="employeeDetailsForm.get('performance_review').value">
+                            <label for="floatingInput">Performance Review</label>
+                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
+                                formControlName="feedback" value="employeeDetailsForm.get('feedback').value">
+                            <label for="floatingPassword">Feedback</label>
+                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                                class="text-danger">
+                                This is required field
+                            </div>
+                        </div>
+                        <button type="submit" class="btn btn-primary" [disabled]="employeeDetailsForm.invalid">Update
+                            Employee</button>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
