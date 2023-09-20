@@ -2,10 +2,30 @@
     <!--First Row-->
     <div class="row text-center mt-3">
         <div class="col-md-4">
+            <div class="card shadow ">
+                <div class="card-body text-success">
+                    <h6>Select Employee</h6>
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown"
+                            aria-expanded="false">
+                            Select Employee
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li *ngFor="let employee of allEmployees">
+                                <p class="dropdown-item" (click)="getEmployeePerformances(employee)">
+                                    {{employee.employee_name}}
+                                </p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
             <a href="" style="text-decoration: none;" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
                 <div class="card shadow ">
                     <div class="card-body text-success">
-                        <h6>Add Employee</h6>
+                        <h6>Add Performance Review</h6>
                         <p class="text-success">+</p>
                     </div>
                 </div>
@@ -14,8 +34,8 @@
         <div class="col-md-4">
             <div class="card shadow ">
                 <div class="card-body text-success">
-                    <h6>Total Employee</h6>
-                    <p class="text-success">{{allEmployees.length}}</p>
+                    <h6>Total Reviews</h6>
+                    <p class="text-success">{{allPerformance.length}}</p>
                 </div>
             </div>
         </div>
@@ -27,34 +47,33 @@
                 <div class="card-shadow">
                     <div class="card-body">
                         <h6 class="text-success">
-                            List of Employees
+                            List of Reviews
                         </h6>
                         <div class="table table-hover mt-3">
                             <thead>
                                 <tr>
-                                    <th scope="col">ID</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Joining Year</th>
-                                    <!-- <th scope="col">Performance Review</th>
-                                    <th scope="col">Feedback</th> -->
+                                    <th scope="col">Reviewer Name</th>
+                                    <th scope="col">Employee Name</th>
+                                    <th scope="col">Performance Review</th>
+                                    <th scope="col">Feedback</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr *ngFor="let employee of allEmployees">
-                                    <td>{{employee.employee_number}}</td>
-                                    <td>{{employee.employee_name}}</td>
-                                    <td>{{employee.joining_year}}</td>
-                                    <!-- <td>{{employee.performance_review}}</td>
-                                    <td>{{employee.feedback}}</td> -->
+                                <tr *ngFor="let performance of allPerformance">
+                                    <td>{{performance.reviewer_name}}</td>
+                                    <td>{{performance.employee_name}}</td>
+                                    <td>{{performance.performance_review}}</td>
+                                    <td>{{performance.feedback}}</td>
                                     <td>
                                         <button type="button" class="btn btn-outline-secondary me-2"
-                                            (click)="getEmployee(employee)" data-bs-toggle="modal"
+                                            (click)="getPerformance(performance)" data-bs-toggle="modal"
                                             data-bs-target="#viewModal">View</button>
                                         <button type="button" class="btn btn-outline-primary me-2"
-                                            (click)="getEmployee(employee)" data-bs-toggle="modal"
+                                            (click)="getPerformance(performance)" data-bs-toggle="modal"
                                             data-bs-target="#editModal">Edit</button>
-                                        <button type=" button" class="btn btn-outline-danger" (click)="deleteEmployee(employee)">Delete</button>
+                                        <button type=" button" class="btn btn-outline-danger"
+                                            (click)="deletePerformance(performance)">Delete</button>
                                     </td>
                                 </tr>
                             </tbody>
@@ -64,31 +83,33 @@
             </div>
         </div>
     </div>
-    <!--Add Employee-->
+    <!--Add Performance-->
     <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
         aria-labelledby="staticBackdropLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Add Employee</h1>
+                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Add Performance Review</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form [formGroup]="employeeDetailsForm" (ngSubmit)="addNewEmployee()">
+                    <form [formGroup]="performanceReviewForm" (ngSubmit)="addNewPerformance()">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Employee Name"
-                                formControlName="employee_name">
-                            <label for="floatingInput">Employee Name</label>
-                            <div *ngIf="employeeDetailsForm.get('employee_name')?.invalid && (employeeDetailsForm.get('employee_name')?.dirty || employeeDetailsForm.get('employee_name')?.touched)"
+                            <select class="form-select" id="reviewer_name" formControlName="reviewer_name">
+                                <option *ngFor="let employee of allEmployees" [value]="employee.employee_name" [selected]="employee.employee_name? true :null">
+                                    {{employee.employee_name }}</option>
+                            </select>
+                            <div *ngIf="performanceReviewForm.get('reviewer_name')?.invalid && (performanceReviewForm.get('reviewer_name')?.dirty || performanceReviewForm.get('reviewer_name')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" placeholder="Joining Year"
-                                formControlName="joining_year">
-                            <label for="floatingInput">Joining Year</label>
-                            <div *ngIf="employeeDetailsForm.get('joining_year')?.invalid && (employeeDetailsForm.get('joining_year')?.dirty || employeeDetailsForm.get('joining_year')?.touched)"
+                            <select class="form-select" id="employee_name" formControlName="employee_name">
+                                <option *ngFor="let employee of allEmployees" [value]="employee.employee_name" [selected]="employee.employee_name? true :null">
+                                    {{employee.employee_name }}</option>
+                            </select>
+                            <div *ngIf="performanceReviewForm.get('employee_name')?.invalid && (performanceReviewForm.get('employee_name')?.dirty || performanceReviewForm.get('employee_name')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
@@ -97,7 +118,7 @@
                             <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
                                 formControlName="performance_review">
                             <label for="floatingInput">Performance Review</label>
-                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                            <div *ngIf="performanceReviewForm.get('performance_review')?.invalid && (performanceReviewForm.get('performance_review')?.dirty || performanceReviewForm.get('performance_review')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
@@ -106,13 +127,13 @@
                             <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
                                 formControlName="feedback">
                             <label for="floatingPassword">Feedback</label>
-                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                            <div *ngIf="performanceReviewForm.get('feedback')?.invalid && (performanceReviewForm.get('feedback')?.dirty || performanceReviewForm.get('feedback')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal"
-                            [disabled]="employeeDetailsForm.invalid">Submit</button>
+                            [disabled]="performanceReviewForm.invalid">Submit</button>
 
                     </form>
                 </div>
@@ -125,31 +146,27 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title text-center text-success" id="exampleModalLabel">Employee Details</h1>
+                    <h1 class="modal-title text-center text-success" id="exampleModalLabel">Performance Details</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <table class="table table-hover">
                         <tbody>
                             <tr>
-                                <td scope="row"><b>Employee Number</b></td>
-                                <td> {{employeeDetailsForm.get('employee_number')?.value}}</td>
+                                <td scope="row"><b>Reviewer</b></td>
+                                <td> {{performanceReviewForm.get('reviewer_name')?.value}}</td>
                             </tr>
                             <tr>
                                 <td scope="row"><b>Employee Name</b></td>
-                                <td> {{employeeDetailsForm.get('employee_name')?.value}}</td>
-                            </tr>
-                            <tr>
-                                <td scope="row"><b>Joining Year</b></td>
-                                <td> {{employeeDetailsForm.get('joining_year')?.value}}</td>
+                                <td> {{performanceReviewForm.get('employee_name')?.value}}</td>
                             </tr>
                             <tr>
                                 <td scope="row"><b>Performance Review</b></td>
-                                <td> {{employeeDetailsForm.get('performance_review')?.value}}</td>
+                                <td> {{performanceReviewForm.get('performance_review')?.value}}</td>
                             </tr>
                             <tr>
                                 <td scope="row"><b>Feedback</b></td>
-                                <td> {{employeeDetailsForm.get('feedback')?.value}}</td>
+                                <td> {{performanceReviewForm.get('feedback')?.value}}</td>
                             </tr>
                         </tbody>
                     </table><button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Close</button>
@@ -165,25 +182,26 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Edit Employee</h1>
+                    <h1 class="modal-title text-success fs-5" id="staticBackdropLabel">Edit Performance Review</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <form [formGroup]="employeeDetailsForm" (ngSubmit)="updateEmployee()">
+                    <form [formGroup]="performanceReviewForm" (ngSubmit)="updateEmployee()">
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="Employee Name"
-                                formControlName="employee_name" value="employeeDetailsForm.get('employee_name').value">
-                            <label for="floatingInput">Employee Name</label>
-                            <div *ngIf="employeeDetailsForm.get('employee_name')?.invalid && (employeeDetailsForm.get('employee_name')?.dirty || employeeDetailsForm.get('employee_name')?.touched)"
+                            <input type="text" class="form-control" id="floatingInput" placeholder="Reviewer Name"
+                                formControlName="reviewer_name">
+                            <label for="floatingInput">Reviewer Name</label>
+                            <div *ngIf="performanceReviewForm.get('reviewer_name')?.invalid && (performanceReviewForm.get('reviewer_name')?.dirty || performanceReviewForm.get('reviewer_name')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <div class="form-floating mb-3">
-                            <input type="number" class="form-control" id="floatingInput" placeholder="Joining Year"
-                                formControlName="joining_year" value="employeeDetailsForm.get('joining_year').value">
-                            <label for="floatingInput">Joining Year</label>
-                            <div *ngIf="employeeDetailsForm.get('joining_year')?.invalid && (employeeDetailsForm.get('joining_year')?.dirty || employeeDetailsForm.get('joining_year')?.touched)"
+                            <select class="form-select" id="employee_name" formControlName="employee_name">
+                                <option *ngFor="let employee of allEmployees" [value]="employee.employee_name">{{
+                                    employee.employee_name }}</option>
+                            </select>
+                            <div *ngIf="performanceReviewForm.get('employee_name')?.invalid && (performanceReviewForm.get('employee_name')?.dirty || performanceReviewForm.get('employee_name')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
@@ -191,23 +209,24 @@
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingInput" placeholder="Performance Review"
                                 formControlName="performance_review"
-                                value="employeeDetailsForm.get('performance_review').value">
+                                value="performanceReviewForm.get('performance_review').value">
                             <label for="floatingInput">Performance Review</label>
-                            <div *ngIf="employeeDetailsForm.get('performance_review')?.invalid && (employeeDetailsForm.get('performance_review')?.dirty || employeeDetailsForm.get('performance_review')?.touched)"
+                            <div *ngIf="performanceReviewForm.get('performance_review')?.invalid && (performanceReviewForm.get('performance_review')?.dirty || performanceReviewForm.get('performance_review')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
                         <div class="form-floating mb-3">
                             <input type="text" class="form-control" id="floatingPassword" placeholder="Feedback"
-                                formControlName="feedback" value="employeeDetailsForm.get('feedback').value">
+                                formControlName="feedback" value="performanceReviewForm.get('feedback').value">
                             <label for="floatingPassword">Feedback</label>
-                            <div *ngIf="employeeDetailsForm.get('feedback')?.invalid && (employeeDetailsForm.get('feedback')?.dirty || employeeDetailsForm.get('feedback')?.touched)"
+                            <div *ngIf="performanceReviewForm.get('feedback')?.invalid && (performanceReviewForm.get('feedback')?.dirty || performanceReviewForm.get('feedback')?.touched)"
                                 class="text-danger">
                                 This is required field
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal" [disabled]="employeeDetailsForm.invalid">Update
+                        <button type="submit" class="btn btn-outline-success" data-bs-dismiss="modal"
+                            [disabled]="performanceReviewForm.invalid">Update
                             Employee</button>
 
                     </form>

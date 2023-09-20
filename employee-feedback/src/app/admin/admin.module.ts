@@ -6,7 +6,8 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import {HttpClientModule} from '@angular/common/http';
 import { AdmindashboardComponent } from './components/admindashboard/admindashboard.component';
-import { EmployeeDataComponent } from './components/admindashboard/employee-data/employee-data.component' 
+import { EmployeeDataComponent } from './components/admindashboard/employee-data/employee-data.component';
+import { PerformanceReviewComponent } from './components/admindashboard/performance-review/performance-review.component' 
 
 
 
@@ -15,7 +16,8 @@ import { EmployeeDataComponent } from './components/admindashboard/employee-data
     AdminComponent,
     LoginComponent,
     AdmindashboardComponent,
-    EmployeeDataComponent
+    EmployeeDataComponent,
+    PerformanceReviewComponent
   ],
   imports: [
     ReactiveFormsModule,

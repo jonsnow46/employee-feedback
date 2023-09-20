@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class AdmindashboardComponent implements OnInit {
 
   employee: boolean = false;
+  performance_review : boolean = false;
   constructor(private router: Router) { }
   ngOnInit(): void {
     this.showEmployeeData();
@@ -16,11 +17,17 @@ export class AdmindashboardComponent implements OnInit {
 
   setoff() {
     this.employee = false;
+    this.performance_review =false;
   }
 
   showEmployeeData() {
     this.setoff();
     this.employee = true;
+  }
+
+  showPerformanceReview() {
+    this.setoff();
+    this.performance_review = true;
   }
 
   signOut() {
